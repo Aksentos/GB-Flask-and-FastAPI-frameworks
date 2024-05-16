@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    {{ title }} 
+{%endblock %} 
+
+{% block content %}
+<div class='cotainer'>
+    <h1>Страница не найдена</h1>
+
+    {% if message %}
+        <div class="row alert alert-danger">
+            <p class="col-12">
+            {{message}}
+            </p>
+        </div>
+    {% endif %}
+
+    <div class="row alert alert-info">
+        <p class="col-12">
+        <a href="{{ url }}">Попробуйте снова</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
