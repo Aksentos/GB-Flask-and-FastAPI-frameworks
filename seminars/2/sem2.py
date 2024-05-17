@@ -205,5 +205,30 @@ def squaring():
     return render_template("squaring.html", **context)
 
 
+"""
+Задание №8
+Создать страницу, на которой будет форма для ввода имени
+и кнопка "Отправить"
+При нажатии на кнопку будет произведено
+перенаправление на страницу с flash сообщением, где будет
+выведено "Привет, {имя}
+"""
+from flask import flash, redirect
+
+app.secret_key = "683974fe89e6d3a1b486141a77d1fabbe22d5cfa48cc5adf3ed9034502503da2"
+
+
+@app.route("/hello/", methods=["GET", "POST"])
+def hello():
+    if request.method == "POST":
+        if not request.form["name"]:
+            flash("Введите имя!", "warning")
+            return redirect(url_for("hello"))
+        name = request.form.get("name")
+        flash(f"Доброго времени суток {name}!!!", "success")
+        return redirect(url_for("hello"))
+    return render_template("name_form.html")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
