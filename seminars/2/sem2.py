@@ -60,7 +60,6 @@ def upload_image():
 страницу приветствия пользователя или страницу с
 ошибкой.
 """
-from flask import redirect
 
 USERS = {"Alex": "1234", "Admin": "1111"}
 

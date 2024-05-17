@@ -8,8 +8,12 @@
 <div class="container">
     <h1>Загрузи свою картинку</h1>
     <form method='post' enctype='multipart/form-data'>
-        <input type='file' name='file'>
-        <input type='submit' value='Загрузить'>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Загрузи свой файл</label>
+            <input class="form-control" type="file" id="formFile" name='file'>
+            <br>
+            <button type="submit" class="btn btn-primary">Загрузить</button>
+          </div>
     </form>
     
 </div>
