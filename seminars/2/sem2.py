@@ -215,6 +215,9 @@ def squaring():
 """
 from flask import flash, redirect
 
+# import secrets
+# print(secrets.token_hex())
+
 app.secret_key = "683974fe89e6d3a1b486141a77d1fabbe22d5cfa48cc5adf3ed9034502503da2"
 
 
