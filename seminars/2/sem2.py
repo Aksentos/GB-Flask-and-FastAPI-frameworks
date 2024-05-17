@@ -156,6 +156,7 @@ def calculate():
 страницу с ошибкой в случае некорректного возраста.
 """
 
+
 @app.route("/age/", methods=["GET", "POST"])
 def age_verification():
     context = {
@@ -164,15 +165,44 @@ def age_verification():
     if request.method == "POST":
         name = request.form.get("name")
         age = request.form.get("age")
-        
+
         if age.isdigit():
             if int(age) < 18:
                 context["message"] = "Вам еще нет 18 лет!"
                 return render_template("403.html", **context), 403
             else:
                 context["name"] = name
-                return render_template('hello.html', **context)
+                return render_template("hello.html", **context)
     return render_template("age.html", **context)
+
+
+"""
+Задание №7
+Создать страницу, на которой будет форма для ввода числа
+и кнопка "Отправить"
+При нажатии на кнопку будет произведено
+перенаправление на страницу с результатом, где будет
+выведено введенное число и его квадрат.
+"""
+
+
+@app.route("/squaring/", methods=["GET", "POST"])
+def squaring():
+    context = {
+        "title": "Возведение числа в квадрат",
+    }
+    if request.method == "POST":
+        num3 = request.form.get("num3")
+        try:
+            num = float(num3)
+            result = num**2
+            context["num3"] = num3
+            context["result"] = result
+            print("tyt")
+            return render_template("squaring.html", **context)
+        except:
+            pass  # error 405
+    return render_template("squaring.html", **context)
 
 
 if __name__ == "__main__":
