@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    {{ title }} 
+{%endblock %} 
+
+{% block content %}
+<div class="container">
+    <h1>Калькулятор</h1>
+    <form method="post">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Первое число" name="num1">
+            <span class="input-group-text">
+                <select class="form-select" aria-label="Выбор операции" name="operation">
+                    <option selected>Выберите операцию</option>
+                    <option value="+">+</option>
+                    <option value="-">-</option>
+                    <option value="*">*</option>
+                    <option value="/">/</option>
+                </select>
+            </span>
+            <input type="text" class="form-control" placeholder="Второе число" name="num2">
+        </div>
+        <button type="submit" class="btn btn-primary">Вычислить</button>
+    </form>
+    <br>
+    {% if result %}
+        <div class="alert alert-success" role="alert">
+            Результат вычисления: {{ num1 }} {{ operation }} {{ num2 }} = {{ result }}
+        </div>
+    {% endif %}
+</div>
+
+
+{% endblock %}

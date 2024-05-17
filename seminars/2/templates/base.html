@@ -12,8 +12,10 @@
     <div class="container-fluid">
         <ul class="nav nav-pills justify-content-end align-items-end">
             <li class="nav-item"><a href="/" class="nav-link">На главную</a></li>
+            <li class="nav-item"><a href={{ url_for('hello_form') }} class="nav-link">Приветствие</a></li>
             <li class="nav-item"><a href={{ url_for('image') }} class="nav-link">Images</a></li>
             <li class="nav-item"><a href={{ url_for('login') }} class="nav-link">Log in</a></li>
+            <li class="nav-item"><a href={{ url_for('calculate') }} class="nav-link">Калькулятор</a></li>
         </ul>
     </div>  
     

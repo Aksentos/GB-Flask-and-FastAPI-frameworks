@@ -1,3 +1,4 @@
+from unittest import result
 from flask import Flask, render_template, request, url_for
 
 app = Flask(__name__)
@@ -102,14 +103,49 @@ def page_not_found(e):
 
 @app.route("/input_text/", methods=["GET", "POST"])
 def input_text():
-    context = {"title": "Страничка для ввода текста",}
+    context = {
+        "title": "Страничка для ввода текста",
+    }
     if request.method == "POST":
         text = request.form.get("text_area")
-        context["title"] = 'Информация о тексте'
+        context["title"] = "Информация о тексте"
         context["count_words"] = len(text.split())
         context["count_chars"] = len(text)
-        return render_template('text_info.html', **context)
+        return render_template("text_info.html", **context)
     return render_template("input_text.html", **context)
+
+
+"""
+Задание №5
+Создать страницу, на которой будет форма для ввода двух
+чисел и выбор операции (сложение, вычитание, умножение
+или деление) и кнопка "Вычислить"
+При нажатии на кнопку будет произведено вычисление
+результата выбранной операции и переход на страницу с
+результатом.
+"""
+
+
+@app.route("/calculate/", methods=["GET", "POST"])
+def calculate():
+    context = {
+        "title": "Калькулятор",
+    }
+    if request.method == "POST":
+        num1 = request.form.get("num1")
+        num2 = request.form.get("num2")
+        operation = request.form.get("operation")
+        if (
+            operation in ("+", "-", "*", "/")
+        ):
+            result = eval(num1 + operation + num2)
+            context["num1"] = num1
+            context["num2"] = num2
+            context["operation"] = operation
+            context["result"] = result
+
+            render_template("calculate.html", **context)
+    return render_template("calculate.html", **context)
 
 
 if __name__ == "__main__":
