@@ -1,3 +1,5 @@
+from os import abort
+import re
 from unittest import result
 from flask import Flask, render_template, request, url_for
 
@@ -135,17 +137,42 @@ def calculate():
         num1 = request.form.get("num1")
         num2 = request.form.get("num2")
         operation = request.form.get("operation")
-        if (
-            operation in ("+", "-", "*", "/")
-        ):
+        if operation in ("+", "-", "*", "/"):
             result = eval(num1 + operation + num2)
             context["num1"] = num1
             context["num2"] = num2
             context["operation"] = operation
             context["result"] = result
-
-            render_template("calculate.html", **context)
+            return render_template("calculate.html", **context)
     return render_template("calculate.html", **context)
+
+
+"""
+Задание №6
+Создать страницу, на которой будет форма для ввода имени
+и возраста пользователя и кнопка "Отправить"
+При нажатии на кнопку будет произведена проверка
+возраста и переход на страницу с результатом или на
+страницу с ошибкой в случае некорректного возраста.
+"""
+
+@app.route("/age/", methods=["GET", "POST"])
+def age_verification():
+    context = {
+        "title": "Проверка возраста",
+    }
+    if request.method == "POST":
+        name = request.form.get("name")
+        age = request.form.get("age")
+        
+        if age.isdigit():
+            if int(age) < 18:
+                context["message"] = "Вам еще нет 18 лет!"
+                return render_template("403.html", **context), 403
+            else:
+                context["name"] = name
+                return render_template('hello.html', **context)
+    return render_template("age.html", **context)
 
 
 if __name__ == "__main__":

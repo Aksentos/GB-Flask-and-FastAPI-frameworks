@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    {{ title }} 
+{%endblock %} 
+
+{% block content %}
+<div class="container">
+    <form method="post">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="floatingInput" placeholder="Введите Ваше имя" name="name">
+            <label for="floatingInput">Введите Ваше имя</label>
+        </div>
+        <div class="form-floating">
+            <input type="text" class="form-control" id="floatingAge" placeholder="Введите Ваш возраст" name="age">
+            <label for="floatingAge">Введите Ваш возраст</label>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+
+
+</div>
+
+
+{% endblock %}
