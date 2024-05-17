@@ -25,11 +25,11 @@ app = Flask(__name__)
 app.secret_key = "816b422c25127e8a51af86a65e2821b3c23bc6407baa64f37281382b503b204a"
 
 
+# вариант 1 (через cookie)
 @app.route("/")
 @app.route("/index/")
 def index():
     name = request.cookies.get("username")
-    print(f"index - {name}")
     if name:
         context = {"name": name}
         response = make_response(render_template("index.html", **context))
@@ -55,5 +55,30 @@ def login():
     return response
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+# # вариант 2 (через session)
+# from flask import session
+
+
+# @app.route("/")
+# @app.route("/index/")
+# def index():
+#     if "username" in session:
+#         return render_template("index.html", name=session["username"])
+#     else:
+#         return redirect(url_for("login"))
+
+
+# @app.route("/login/", methods=["GET", "POST"])
+# def login():
+#     context = {"title": "Страница входа"}
+#     if request.method == "POST":
+#         session["username"] = request.form.get("name")
+#         session["usermail"] = request.form.get("mail")
+#         return redirect(url_for("index"))
+#     session.pop("username", None)
+#     session.pop("usermail", None)
+#     return render_template("login.html", title="Страница входа")
+
+
+# if __name__ == "__main__":
+#     app.run(debug=True)
