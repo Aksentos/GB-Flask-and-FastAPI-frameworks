@@ -91,5 +91,26 @@ def page_not_found(e):
     return render_template("404.html", **context), 404
 
 
+"""
+Задание №4
+Создать страницу, на которой будет форма для ввода текста и
+кнопка "Отправить"
+При нажатии кнопки будет произведен подсчет количества слов
+в тексте и переход на страницу с результатом.
+"""
+
+
+@app.route("/input_text/", methods=["GET", "POST"])
+def input_text():
+    context = {"title": "Страничка для ввода текста",}
+    if request.method == "POST":
+        text = request.form.get("text_area")
+        context["title"] = 'Информация о тексте'
+        context["count_words"] = len(text.split())
+        context["count_chars"] = len(text)
+        return render_template('text_info.html', **context)
+    return render_template("input_text.html", **context)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

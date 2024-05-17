@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    {{ title }} 
+{%endblock %} 
+
+{% block content %}
+<div class="container">
+    <h1>Введите текст и нажмите отправить</h1>
+    <form method="post">
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea" class="form-label">Текст вводится в это поле</label>
+            <textarea class="form-control" id="exampleFormControlTextarea" rows="3" name='text_area'></textarea>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+</div>
+
+
+{% endblock %}
