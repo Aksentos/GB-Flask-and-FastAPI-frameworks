@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_wtf.csrf import CSRFProtect
-from models_4 import db
+from models_4 import db, User
 from forms_4 import LoginForm
 
 
@@ -30,7 +30,7 @@ app.config["SECRET_KEY"] = (
 )
 csrf = CSRFProtect(app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///university.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 db.init_app(app)
 
 
@@ -46,13 +46,25 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/login/", methods=["GET", "POST"])
-def login():
+@app.route("/register/", methods=["GET", "POST"])
+def register():
     form = LoginForm()
     if request.method == "POST" and form.validate():
-        # Обработка данных из формы
-        pass
-    return render_template("login.html", form=form)
+        username = form.username.data
+        email = form.email.data
+        password = form.password.data
+        #  Проверяем на уникальность email в бд, если такого нет добавляем в БД
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            new_user = User(username=username, email=email, password=password)
+            db.session.add(new_user)
+            db.session.commit()
+            return render_template("index.html", username=username)
+        # если такаой мэйл уже есть, то вызываем сообщение
+        flash("Пользователь с такой почтой уже зарегистрирован", "warning")
+        return redirect(url_for("register"))
+
+    return render_template("register.html", form=form)
 
 
 if __name__ == "__main__":

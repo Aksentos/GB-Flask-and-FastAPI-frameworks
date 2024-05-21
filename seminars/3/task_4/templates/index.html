@@ -5,5 +5,13 @@
 {%endblock %} 
 
 {% block content %}
-<h1> Главная страница </h1>
+<div class='contaner'>
+    <h1> Главная страница </h1>
+    <hr>
+    {% if username %}
+        <p>Здравствуйте {{ username }}</p><br>
+        <p> Вы успешно зарегистрировались!!!</p>
+    {% endif %}
+</div>
+
 {% endblock %}
