@@ -1,4 +1,4 @@
-from sem3 import app
+from task_1 import app
 
 if __name__ == "__main__":
     app.run(debug=True)

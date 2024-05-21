@@ -1,10 +1,11 @@
-from typing import Any
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm.relationships import RelationshipProperty
+
 
 db = SQLAlchemy()
 
-
+'''
+Задача 1
+'''
 class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
@@ -26,3 +27,4 @@ class Faculty(db.Model):
     def __repr__(self) -> str:
         return self.title
     
+

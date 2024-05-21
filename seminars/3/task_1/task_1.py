@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from models import db, Student, Faculty
+from models_1 import db, Student, Faculty
 
 
 app = Flask(__name__)
@@ -71,5 +71,5 @@ def fff():
         print(s.faculty)
 
 
-# if __name__ == "__main__":
-#     app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
