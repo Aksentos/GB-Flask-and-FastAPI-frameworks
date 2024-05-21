@@ -1,4 +1,4 @@
-from task_6 import app
+from task_5_6_7 import app
 
 
 if __name__ == "__main__":

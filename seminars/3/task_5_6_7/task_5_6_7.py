@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request
+import string
+from flask import Flask, render_template, request, flash, redirect, url_for
 from flask_wtf.csrf import CSRFProtect
 from forms_5 import RegisterForm
+
 """
 Задание №5
 Создать форму регистрации для пользователя.
@@ -24,6 +26,20 @@ from forms_5 import RegisterForm
 должна быть валидным адресом.
 После отправки формы, выведите успешное сообщение об
 успешной регистрации.
+
+Задание №7
+Создайте форму регистрации пользователей в приложении Flask. Форма должна
+содержать поля: имя, фамилия, email, пароль и подтверждение пароля. При отправке
+формы данные должны валидироваться на следующие условия:
+○ Все поля обязательны для заполнения.
+○ Поле email должно быть валидным email адресом.
+○ Поле пароль должно содержать не менее 8 символов, включая хотя бы одну букву и
+одну цифру.
+○ Поле подтверждения пароля должно совпадать с полем пароля.
+○ Если данные формы не прошли валидацию, на странице должна быть выведена
+соответствующая ошибка.
+○ Если данные формы прошли валидацию, на странице должно быть выведено
+сообщение об успешной регистрации.
 """
 
 
@@ -48,17 +64,26 @@ def registration():
         username = form.username.data
         email = form.email.data
         password = form.password.data
+
+        # Состоит ли строка из цифр или букв
+        if not any(char.isdigit() for char in password) or not any(
+            char.isalpha() for char in password
+        ):
+
+            flash("Пароль должен состоять из букв и цифр", "warning")
+            return redirect(url_for("registration"))
+
         birthday = form.birthday.data
-        birthday = f'{birthday.day}.{birthday.month}.{birthday.year}'
+        birthday = f"{birthday.day}.{birthday.month}.{birthday.year}"
 
         context = {
-            'title': "Форма регистрации",
+            "title": "Форма регистрации",
             "username": username,
             "email": email,
             "password": password,
             "birthday": birthday,
         }
-        return render_template('index.html', **context)
+        return render_template("index.html", **context)
     # не забываем добавить форму на страничку
     return render_template("registration.html", form=form)
 
