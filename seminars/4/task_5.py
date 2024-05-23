@@ -1,12 +1,12 @@
 """
-Задание №4
+Задание №5
 � Создать программу, которая будет производить подсчет
 количества слов в каждом файле в указанной директории и
 выводить результаты в консоль.
-� Используйте потоки.
+� Используйте процессы.
 """
 
-import threading
+import multiprocessing
 from pathlib import Path
 
 
@@ -16,22 +16,23 @@ def words_count(filename):
         text = [
             word
             for word in text.replace(".", "")
-            .replace("/n", " ")
             .replace(",", "")
+            .replace("/n", " ")
             .split()
             if word.isalpha()
         ]
         print(f"В файле {filename.stem} количество слов = {len(text)}")
 
 
-path = Path(Path().cwd() / "texts")
-threads = []
+if __name__ == "__main__":
+    path = Path(Path().cwd() / "texts")
+    processes = []
 
-for obj in path.iterdir():
-    if obj.is_file():
-        thread = threading.Thread(target=words_count, args=(obj,))
-        threads.append(thread)
-        thread.start()
+    for obj in path.iterdir():
+        if obj.is_file():
+            proc = multiprocessing.Process(target=words_count, args=(obj,))
+            processes.append(proc)
+            proc.start()
 
-for thread in threads:
-    thread.join()
+    for proc in processes:
+        proc.join()
