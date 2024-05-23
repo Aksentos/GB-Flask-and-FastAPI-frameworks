@@ -26,12 +26,7 @@ async def words_count(filename):
 
 async def main():
     path = Path(Path().cwd() / "texts")
-    tasks = []
-
-    for obj in path.iterdir():
-        if obj.is_file():
-            task = asyncio.ensure_future(words_count(obj))
-            tasks.append(task)
+    tasks = [asyncio.ensure_future(words_count(obj)) for obj in path.iterdir() if obj.is_file()]
     await asyncio.gather(*tasks)
 
 
