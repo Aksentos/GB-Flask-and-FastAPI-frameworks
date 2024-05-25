@@ -2,8 +2,10 @@
 
 import asyncio
 import aiohttp  # асинхронный HTTP-клиент/сервер для модуля asyncio
+import aiofiles  # библиотека для работы с файлами для модуля asyncio
 import argparse
 import time
+import os
 from download_func import download_image
 
 
@@ -15,12 +17,35 @@ URLS = [
     "https://img2.akspic.ru/crops/7/7/8/5/6/165877/165877-minimalizm-rastenie-simvol-logo-derevo-7680x4320.jpg",
 ]
 
+# # Вариант 1: По-моему так работает неправильно (долго):
+# async def downl(url):
+#     return download_image(url)
 
+
+# async def async_download(url: str):
+#     async with aiohttp.ClientSession() as session:
+#         async with session.get(url) as resp:
+#             if resp.status == 200:
+#                 await downl(url)
+
+
+# Вариант 1: Работает быстро, но с библиотекой не из лекции (aiofiles)
 async def async_download(url: str):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as resp:
             if resp.status == 200:
-                download_image(url)
+                start_time = time.time()
+                filename = url.split("/")[-1]
+                if "downloads" not in os.listdir():
+                    os.mkdir("downloads")
+                image = await aiofiles.open(
+                    os.path.join(os.getcwd(), "downloads", filename), mode="wb"
+                )
+                await image.write(await resp.read())
+                await image.close()
+                print(
+                    f"Время скачивания картинки: {time.time() - start_time:.2f} секунд"
+                )
 
 
 async def main(urls: list[str] = URLS):

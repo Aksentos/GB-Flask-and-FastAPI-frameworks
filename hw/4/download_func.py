@@ -26,7 +26,6 @@ def download_image(url: str):
 
     if "downloads" not in os.listdir():
         os.mkdir("downloads")
-    print(f'начал скачивать {time.time()}')
     with open(os.path.join(os.getcwd(), "downloads", filename), "wb") as image:
         image.write(img_data.content)
         print(f"Время скачивания картинки: {time.time() - start_time:.2f} секунд")
