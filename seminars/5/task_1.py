@@ -73,4 +73,4 @@ async def delete_task(task_id: int):
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("task_1:app", host="127.0.0.1", port=8000, reload=True)
