@@ -1,11 +1,13 @@
-from flask import redirect, url_for
 import uvicorn
 import logging
+from typing import Annotated
 from fastapi import FastAPI, HTTPException, Request, Form
 from pydantic import BaseModel, EmailStr, constr
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
+# Чтобы использовать формы, сначала установите python-multipart.
+# Например, выполните команду pip install python-multipart.
 
 app = FastAPI()
 
@@ -56,12 +58,21 @@ async def all_users(request: Request):
 
 
 # маршрут для добавления нового пользователя
-@app.post("/create_user/", response_model=User)
-async def create_user(user: User):
-    if user.id not in [u.id for u in users]:
-        users.append(user)
-        logger.info(f"{user.name} registered")
-    raise HTTPException(403, detail=f"User with id={user.id} is already registered")
+@app.post("/users/")
+async def create_user(
+    request: Request,
+    id: Annotated[int, Form()],
+    name: Annotated[str, Form()],
+    email: Annotated[str, Form()],
+    password: Annotated[str, Form()],
+):
+    if email not in [user.email for user in users]:
+        users.append(User(id=id, name=name, email=email, password=password))
+        logger.info(f"{name} registered")
+        return templates.TemplateResponse(
+            "users.html", {"request": request, "users": users}
+        )
+    raise HTTPException(403, detail=f"User with email={email} is already registered")
 
 
 if __name__ == "__main__":

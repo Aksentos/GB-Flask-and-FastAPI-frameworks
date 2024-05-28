@@ -26,13 +26,14 @@
             {% endif %}
         </table>  
     <br>
-    <button type="submit" class="btn btn-success">Добавить пользователя</button>
-    <!-- так не работает> <form action="/create_user/" method="post">
+    
+    <form action="{{ url_for('create_user')}}" method="post">
         <input type="integer" name="id" placeholder="ID"><br>
         <input type="text" name="name" placeholder="Name"><br>
         <input type="email" name="email" placeholder="Email"><br>
         <input type="password" name="password" placeholder="Password"><br>
-    </form> <-->
+        <button type="submit" class="btn btn-success">Добавить пользователя</button>
+    </form>
     
     </div>
 
