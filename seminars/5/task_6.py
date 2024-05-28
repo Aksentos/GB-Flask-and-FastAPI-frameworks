@@ -28,9 +28,7 @@ logger = logging.getLogger(__name__)
 Реализуйте вывод списка пользователей через шаблонизатор Jinja.
 """
 # нужно указать полный путь до папки templates
-templates = Jinja2Templates(
-    directory="C:/Users/s.aksentiev/Desktop/gm/GB/flask/GB-Flask-and-FastAPI-frameworks/seminars/5/templates"
-)
+templates = Jinja2Templates(directory="templates")
 
 
 class User(BaseModel):
