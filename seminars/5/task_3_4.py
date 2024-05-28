@@ -18,6 +18,11 @@ logger = logging.getLogger(__name__)
 Создайте список users для хранения пользователей.
 Создайте маршрут для добавления нового пользователя (метод POST).
 Реализуйте валидацию данных запроса и ответа.
+
+Задание №4
+Создать API для обновления информации о пользователе в базе данных.
+Приложение должно иметь возможность принимать PUT запросы с данными
+пользователей и обновлять их в базе данных.
 """
 
 
@@ -53,5 +58,16 @@ async def create_user(user: User):
     raise HTTPException(403, detail=f"User with id={user.id} is already registered")
 
 
+#  маршрут для обновления информации о пользователе
+@app.put("/user/{iser_id}", response_model=User)
+async def update_user(user_id: int, user: User):
+    for num in range(len(users)):
+        if users[num].id == user_id:
+            users[num] = user
+            logger.info(f"User with id={user.id} was changed")
+            return users[num]
+    raise HTTPException(status_code=404, detail="User with id={user.id} not found")
+
+
 if __name__ == "__main__":
-    uvicorn.run("task_3:app", host="localhost", port=8000, reload=True)
+    uvicorn.run("task_3_4:app", host="localhost", port=8000, reload=True)
