@@ -59,15 +59,26 @@ async def create_user(user: User):
 
 
 #  маршрут для обновления информации о пользователе
-@app.put("/user/{iser_id}", response_model=User)
+@app.put("/user/{user_id}", response_model=User)
 async def update_user(user_id: int, user: User):
     for num in range(len(users)):
         if users[num].id == user_id:
             users[num] = user
-            logger.info(f"User with id={user.id} was changed")
+            logger.info(f"User with id={user.id} changed")
             return users[num]
-    raise HTTPException(status_code=404, detail="User with id={user.id} not found")
+    raise HTTPException(status_code=404, detail=f"User with id={user_id} not found")
+
+
+#  маршрут для удаления информации о пользователе
+@app.delete("/user/{user_id}")
+async def delete_user(user_id: int):
+    for num in range(len(users)):
+        if users[num].id == user_id:
+            del users[num]
+            logger.info(f"user with id={user_id} deleted")
+            return {"message": f"User id={user_id} deleted successfully"}
+    raise HTTPException(status_code=404, detail=f"User with id={user_id} not found")
 
 
 if __name__ == "__main__":
-    uvicorn.run("task_3_4:app", host="localhost", port=8000, reload=True)
+    uvicorn.run("task_3_4_5:app", host="localhost", port=8000, reload=True)
