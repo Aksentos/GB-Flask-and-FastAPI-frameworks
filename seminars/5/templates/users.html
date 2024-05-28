@@ -1,0 +1,39 @@
+{% extends 'base.html' %} 
+
+{% block title %} {{ title }} {%endblock title %} 
+
+{% block content %} 
+    <h1 align="center">{{ title }}</h1>
+
+    <hr>
+    <div class="container">
+        <table class="table table-striped">
+            <thead class="table-primary">
+                <tr>
+                    <th class='col'>ID</th>
+                    <th class='col'>Имя</th>
+                    <th class='col'>Email</th>
+                </tr>
+            </thead>
+            {% if users %}
+                {% for user in users %}
+                    <tr>
+                        <td class='col'>{{ user.id }}</td>
+                        <td class='col'>{{ user.name }}</td>
+                        <td class='col'>{{ user.email }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>  
+    <br>
+    <button type="submit" class="btn btn-success">Добавить пользователя</button>
+    <!-- так не работает> <form action="/create_user/" method="post">
+        <input type="integer" name="id" placeholder="ID"><br>
+        <input type="text" name="name" placeholder="Name"><br>
+        <input type="email" name="email" placeholder="Email"><br>
+        <input type="password" name="password" placeholder="Password"><br>
+    </form> <-->
+    
+    </div>
+
+{% endblock content %}
