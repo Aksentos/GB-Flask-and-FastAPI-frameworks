@@ -65,7 +65,7 @@ async def update_user(user_id: int, new_user: UserIn):
 
 
 @router.delete("/users/{user_id}")
-async def delete_user(user_id: int, new_user: UserIn):
+async def delete_user(user_id: int):
     query = users.select().where(users.c.id == user_id)
     existing_user = await db.fetch_one(query)
     if existing_user:

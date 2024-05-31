@@ -19,7 +19,7 @@ API должно поддерживать следующие операции:
 """
 
 import uvicorn
-from routers import router as users_router
+from users_routers import router as users_routers
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from db import db
@@ -45,7 +45,7 @@ app = FastAPI(lifespan=lifespan)
 #     await db.disconnect()
 
 
-app.include_router(users_router, tags=["users"])
+app.include_router(users_routers, tags=["users"])
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="localhost", port=8000, reload=True)
