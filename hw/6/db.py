@@ -1,13 +1,13 @@
 import databases
-from sqlalchemy import DECIMAL, Date, Table, Column, Integer, String, MetaData, create_engine
+from sqlalchemy import DECIMAL, Date, Float, Table, Column, Integer, String, MetaData, create_engine
 from settings import settings
 
-
+# Создаем БД
 DATABASE_URL = settings.DATABASE_URL
 db = databases.Database(DATABASE_URL)
 metadata = MetaData()
 
-
+# Таблицы в БД
 users = Table(
     "users",
     metadata,
@@ -24,7 +24,7 @@ items = Table(
     Column("id", Integer, primary_key=True),
     Column("title", String(50)),
     Column("description", String(50)),
-    Column("price", DECIMAL(scale=2)),
+    Column("price", DECIMAL),
 )
 
 orders = Table(
@@ -36,6 +36,9 @@ orders = Table(
     Column("date", Date()),
     Column("status", String(30)),
 )
+
+
+    
 
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 metadata.create_all(engine)

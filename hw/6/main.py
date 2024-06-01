@@ -20,7 +20,8 @@ id (PRIMARY KEY), название, описание и цена.
 """
 
 import uvicorn
-from tasks_routers import task_router 
+from users_routers import user_router
+from items_routers import item_router
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from db import db
@@ -38,7 +39,8 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 # Регистрируем роутеры
-app.include_router(task_router, tags=["tasks"])
+app.include_router(user_router, tags=["users"])
+app.include_router(item_router, tags=["items"])
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="localhost", port=8000, reload=True)
