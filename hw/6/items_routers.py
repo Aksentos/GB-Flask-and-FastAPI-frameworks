@@ -13,7 +13,7 @@ item_router = APIRouter()
 
 
 @item_router.get("/items/", response_model=List[Item])
-async def get_items():  
+async def get_items():
     query = items.select()
     return await db.fetch_all(query)
 

@@ -1,5 +1,15 @@
 import databases
-from sqlalchemy import DECIMAL, Date, Float, Table, Column, Integer, String, MetaData, create_engine
+from sqlalchemy import (
+    DECIMAL,
+    Date,
+    ForeignKey,
+    Table,
+    Column,
+    Integer,
+    String,
+    MetaData,
+    create_engine,
+)
 from settings import settings
 
 # Создаем БД
@@ -28,17 +38,15 @@ items = Table(
 )
 
 orders = Table(
-    'orders',
+    "orders",
     metadata,
     Column("id", Integer, primary_key=True),
-    Column("user_id", Integer),
-    Column("item_id", Integer),
-    Column("date", Date()),
+    Column("user_id", Integer, ForeignKey("users.id")),
+    Column("item_id", Integer, ForeignKey("items.id")),
+    Column("order_date", Date()),
     Column("status", String(30)),
 )
 
-
-    
 
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 metadata.create_all(engine)

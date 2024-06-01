@@ -4,7 +4,6 @@ from enum import Enum
 from datetime import date
 
 
-
 class Status(str, Enum):
     accepted = "accepted"
     gathering = "gathering"
@@ -25,7 +24,14 @@ class User(UserIn):
 class ItemIn(BaseModel):
     title: str = Field(..., title="title", min_length=2, max_length=50)
     description: str = Field(..., title="description", max_length=300)
-    price: Decimal = Field(..., title="price", ge=0, description="Price of the item", quant_digits=2, decimal_places=2)
+    price: Decimal = Field(
+        ...,
+        title="price",
+        ge=0,
+        description="Price of the item",
+        quant_digits=2,
+        decimal_places=2,
+    )
 
 
 class Item(ItemIn):
